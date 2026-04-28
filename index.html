@@ -245,7 +245,7 @@ function loadQuestion(){
   document.getElementById('submit-btn').disabled=false;
   document.getElementById('eff-name').textContent=queue[qIdx].name;
   updateMeta();
-  setTimeout(()=>inp.focus(),50);
+  setTimeout(()=>{inp.focus();if(!('ontouchstart' in window))inp.focus();},50);
 }
 
 function checkAnswer(){
@@ -279,8 +279,32 @@ function checkAnswer(){
   document.getElementById('next-btn').style.display='block';
 }
 
-document.getElementById('val-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter'){if(answered)nextQ();else checkAnswer();}
+// Keep input always focused on PC (non-touch devices)
+const inp=document.getElementById('val-input');
+function refocus(){
+  // Only auto-refocus on non-touch devices
+  if(!('ontouchstart' in window)){
+    setTimeout(()=>inp.focus(),10);
+  }
+}
+document.addEventListener('click',function(e){
+  // Refocus input whenever user clicks anywhere except the input itself
+  if(e.target!==inp && document.getElementById('quiz-area').style.display!=='none'){
+    refocus();
+  }
+});
+document.addEventListener('keydown',function(e){
+  // If a key is pressed and quiz is active, always make sure input is focused
+  if(document.getElementById('quiz-area').style.display!=='none' && document.activeElement!==inp){
+    if(!e.ctrlKey && !e.metaKey && !e.altKey){
+      inp.focus();
+    }
+  }
+  if(e.key==='Enter'){
+    if(document.getElementById('quiz-area').style.display==='none') return;
+    if(answered) nextQ();
+    else checkAnswer();
+  }
 });
 
 // Start timer on first digit typed
