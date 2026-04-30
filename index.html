@@ -145,7 +145,7 @@ const effects=[
   {name:"Glitter",value:2},{name:"Infernal Flare",value:2},{name:"Easter Basket",value:2},
   {name:"Golden Harp",value:2.2},{name:"Lovebite",value:2.5},{name:"Blizzard",value:2.5},
   {name:"Spirit Surge",value:3},{name:"Arctic Blast",value:3},{name:"Stellar Glow",value:3},
-  {name:"Intergalactic Clouds",value:3},{name:"Peppermint",value:3.1},{name:"Sacred",value:3.2},
+  {name:"Intergalactic Clouds",value:3},{name:"Peppermint",value:3},{name:"Sacred",value:3.3},
   {name:"Approaching Storm",value:4},{name:"Demonic Hex",value:4.5},
   {name:"Eerie Fog",value:22},{name:"Hitman",value:55},{name:"Jack' O Lantern",value:60}
 ];
@@ -279,11 +279,8 @@ function checkAnswer(){
   document.getElementById('next-btn').style.display='block';
 }
 
-document.addEventListener('keydown',function(e){
-  if(e.key==='Enter'){
-    e.preventDefault();
-    if(answered)nextQ();else checkAnswer();
-  }
+document.getElementById('val-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){if(answered)nextQ();else checkAnswer();}
 });
 
 // Start timer on first digit typed
