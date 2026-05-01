@@ -279,8 +279,15 @@ function checkAnswer(){
   document.getElementById('next-btn').style.display='block';
 }
 
-document.getElementById('val-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter'){if(answered)nextQ();else checkAnswer();}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    e.preventDefault();
+    if(answered){
+      nextQ();
+    } else {
+      checkAnswer();
+    }
+  }
 });
 
 // Start timer on first digit typed
